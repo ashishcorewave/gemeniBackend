@@ -2,7 +2,7 @@ const express = require('express');
 const fileUpload = require('express-fileupload');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const fs = require('fs').promises; // Use fs.promises for async file operations
-
+require("dotenv").config();
 const app = express();
 const port = 3002;
 
@@ -20,7 +20,7 @@ app.use((req, resp, next) => {
     next();
 });
 
-const apiKey = "AIzaSyBTnsao9mx_R_XL0QgES5nkwpx17VwgCJ0"; // Store API key in environment variables
+const apiKey = process.env.GEMINI_API_KEY; // Store API key in environment variables
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
