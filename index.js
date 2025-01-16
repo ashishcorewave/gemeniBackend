@@ -4,7 +4,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const fs = require('fs').promises; // Use fs.promises for async file operations
 require("dotenv").config();
 const app = express();
-const port = 3002;
+const port = process.env.PORT;
 
 // Enable file uploads
 app.use(fileUpload());
@@ -23,6 +23,12 @@ app.use((req, resp, next) => {
 const apiKey = process.env.GEMINI_API_KEY; // Store API key in environment variables
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+
+//here this is used when we want to confirm backend server is running or not via browser.
+app.get("/", (req, resp) => {
+    resp.status(200).send("Welcome to Chatbot Backend APIs");
+});
 
 app.post('/chatbot-message', async (req, res) => {
     try {
